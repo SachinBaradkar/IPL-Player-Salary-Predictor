@@ -55,7 +55,7 @@ def main():
             st.sidebar.write("Please enter a name to search.")
 
     # Sidebar for the second search
-    st.sidebar.title('Search Team key number')
+    st.sidebar.title('Search Team Key number')
     search_input_2 = st.sidebar.text_input("Enter a Team Name to search:")
     if st.sidebar.button("Search Team"):
         if search_input_2:
