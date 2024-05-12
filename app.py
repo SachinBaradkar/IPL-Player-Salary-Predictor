@@ -11,6 +11,10 @@ df1 = pd.read_excel("player_name.xlsx")
 # Load the necessary data for the second Excel file
 df2 = pd.read_excel("team_name.xlsx")
 
+df_role = pd.read_excel("role.xlsx")
+df_origin = pd.read_excel("origin.xlsx")
+
+
 # Function to search for the most matched row for the first Excel file
 def search(name, data):
     max_match = 0
@@ -27,79 +31,64 @@ def search(name, data):
     
     return best_row
 
-# Function to display a dictionary in a table on the sidebar
-def display_dictionary_in_table_sidebar(dictionary):
-    for key, value in dictionary.items():
-        st.sidebar.write(f"{key} | {value}")
 
-# Dictionaries to display on the sidebar
-my_dict6 = {0: 'All-Rounder', 1: 'Batsman', 2: 'Bowler', 3: 'Wicket Keeper'}
-my_dict7 = {0: 'Indian', 1: 'Overseas'}
+
 
 # Main function to run the Streamlit app
-
 def main():
+    
 
-    # Sidebar for the first search
-    st.sidebar.title('Search Player Key number')
-    search_input_1 = st.sidebar.text_input("Enter a Player Name to search:")
-    if st.sidebar.button("Search Player"):
-        if search_input_1:
-            result_1 = search(search_input_1, df1)
-            if result_1 is not None:
-                st.sidebar.write("Here is the Key Number of Player:")
-                st.sidebar.write(result_1)
-            else:
-                st.sidebar.write("This Player is not undergone the auction process in recent years.")
-        else:
-            st.sidebar.write("Please enter a name to search.")
-
-    # Sidebar for the second search
-    st.sidebar.title('Search Team Key number')
-    search_input_2 = st.sidebar.text_input("Enter a Team Name to search:")
-    if st.sidebar.button("Search Team"):
-        if search_input_2:
-            result_2 = search(search_input_2, df2)
-            if result_2 is not None:
-                st.sidebar.write("Here is the Key Number of Team:")
-                st.sidebar.write(result_2)
-            else:
-                st.sidebar.write("No match found.")
-        else:
-            st.sidebar.write("Please enter a name to search.")
-
-        # Display dictionaries on the sidebar
-    st.sidebar.title("Role and Key Number:")
-    display_dictionary_in_table_sidebar(my_dict6)
-    st.sidebar.write("  \n")
-    st.sidebar.title("Origin and Key Number:")
-    display_dictionary_in_table_sidebar(my_dict7)
-
-    # Main content
+    
     st.title('IPL Player Salary Predictor')
     image = Image.open('iplaml.jpg')
     st.image(image, '')
     st.write("  \n")
     st.markdown("## Enter the player data here to predict the Salary :-")
-    st.markdown("###### (You can search the key numbers from the sidebar)")
-
+    #st.markdown("###### (You can search the key numbers from the sidebar)")
 
     # Get user input for prediction
-    Player = st.text_input("Enter Player Key Number", )
-    Role = st.slider('Enter Role Key Number', 0, 3, 0)
-    Team = st.text_input("Enter Team Key Number", )
+    player_name = st.text_input("Enter Player Name")
+
+    # Dropdown for Role
+    role_options = df_role['Role'].tolist()
+    selected_role = st.selectbox('Select Role', role_options)
+    role_key = df_role[df_role['Role'] == selected_role]['Key Number'].values[0]
+    
+    # Dropdown for team
+    team_options = df2['Team Name'].tolist()
+    selected_team = st.selectbox('Select Team', team_options)
+    team_key = df2[df2['Team Name'] == selected_team]['Key Number'].values[0]
+
     Year = st.selectbox(
         'Select a Year',
         ('2025', '2026', '2027')
     )
-    Player_Origin = st.slider('Enter Player Origin', 0, 1, 0)
+    
+    # Dropdown for Origin
+    origin_options = df_origin['Origin'].tolist()
+    selected_origin = st.selectbox('Select Origin', origin_options)
+    origin_key = df_origin[df_origin['Origin'] == selected_origin]['Key Number'].values[0]
+
+    if player_name:
+        player_info = search(player_name, df1)
+        if player_info is not None:
+            player_key = player_info['Key Number']  # Assuming 'Key' is the column name for the key number
+        else:
+            st.write("This player has not gone through auction process in recent years.")
+            return
+    else:
+        st.write("Please enter player data.")
+        return
+
+   
+    
 
     user_report_data = {
-        'Player': Player,
-        'Role': Role,
-        'Team': Team,
+        'Player': player_key,
+        'Role': role_key,
+        'Team': team_key,
         'Year': Year,
-        'Player_Origin': Player_Origin,
+        'Player_Origin': origin_key,
     }
     user_data = pd.DataFrame(user_report_data, index=[0])
 
