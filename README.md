@@ -52,22 +52,7 @@ NumPy
 Data Storage
 CSV
 Excel Files
-📂 Project Structure
-IPL-Player-Salary-Predictor/
-│
-├── app.py
-├── Train_data_Model_apply_and_Save.py
-├── IPL_Auction_Data.csv
-├── model_new1.sav
-│
-├── player_name.xlsx
-├── team_name.xlsx
-├── role.xlsx
-├── origin.xlsx
-│
-├── iplaml.jpg
-├── requirements.txt
-└── README.md
+
 📊 Dataset
 
 The project uses historical IPL auction data containing:
