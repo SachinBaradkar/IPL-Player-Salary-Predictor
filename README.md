@@ -104,35 +104,32 @@ The trained model is stored as:
 model_new1.sav
 🔍 Machine Learning Workflow
 1. Data Collection
-
 Historical IPL auction dataset was collected.
 
 2. Data Cleaning
 Missing values removed
 Datatypes corrected
+
 3. Feature Encoding
-
 Categorical columns converted using Label Encoding:
-
 Player
 Role
 Team
 Player Origin
+
 4. Train-Test Split
 test_size = 0.2
 80% Training
 20% Testing
-5. Model Training
 
+5. Model Training
 Multiple regression algorithms were trained and compared.
 
 6. Model Evaluation
-
 Evaluation Metric:
-
 RMSE (Root Mean Square Error)
-7. Model Deployment
 
+7. Model Deployment
 The best model was saved using Pickle and deployed through Streamlit.
 
 ⚙️ Installation
@@ -141,9 +138,9 @@ git clone https://github.com/SachinBaradkar/IPL-Player-Salary-Predictor.git
 cd IPL-Player-Salary-Predictor
 Install Dependencies
 pip install -r requirements.txt
+
 ▶️ Run Application
 streamlit run app.py
-
 The application will open in your browser automatically.
 
 🧠 How Prediction Works
@@ -157,6 +154,7 @@ Origin
 Features are passed to the trained Gradient Boosting model.
 Model predicts expected IPL salary.
 Salary is displayed in Indian Rupees (₹).
+
 📈 Future Improvements
 Add player performance statistics
 Include batting and bowling metrics
@@ -165,6 +163,7 @@ Live IPL database integration
 Interactive salary trend visualization
 Auction price comparison dashboard
 Deep Learning based prediction
+
 🎯 Applications
 Sports Analytics
 Cricket Data Science
